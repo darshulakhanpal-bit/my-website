@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+}
+
+input {
+  padding: 5px;
+  margin: 5px;
+}
+
+button {
+  padding: 8px;
+  margin: 5px;
+}
+
+/* hover */
+button:hover {
+  background-color: lightblue;
+}
+
+#res {
+  color: blue;
+  font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Calculator</h2>
+
+<input type="number" id="n1" placeholder="Number 1"><br>
+<input type="number" id="n2" placeholder="Number 2"><br>
+
+<p>Operation: <span id="op">None</span></p>
+
+<button onclick="add()">Add</button>
+<button onclick="sub()">Subtract</button>
+<button onclick="mul()">Multiply</button>
+<button onclick="div()">Divide</button>
+<button onclick="clearAll()">Clear</button>
+
+<h3>Result: <span id="res"></span></h3>
+
+<script>
+let lastOp = "add"; // default
+
+function getVal() {
+  let a = document.getElementById("n1").value;
+  let b = document.getElementById("n2").value;
+  return [Number(a), Number(b)];
+}
+
+function showResult(value, operation) {
+  document.getElementById("res").innerText = value;
+  document.getElementById("op").innerText = operation;
+}
+
+function add() {
+  let [a,b] = getVal();
+  lastOp = "add";
+  showResult(a + b, "Addition");
+}
+
+function sub() {
+  let [a,b] = getVal();
+  lastOp = "sub";
+  showResult(a - b, "Subtraction");
+}
+
+function mul() {
+  let [a,b] = getVal();
+  lastOp = "mul";
+  showResult(a * b, "Multiplication");
+}
+
+function div() {
+  let [a,b] = getVal();
+  lastOp = "div";
+  
+  if (b === 0) {
+    showResult("Cannot divide by 0", "Division");
+  } else {
+    showResult(a / b, "Division");
+  }
+}
+
+function clearAll() {
+  document.getElementById("n1").value = "";
+  document.getElementById("n2").value = "";
+  document.getElementById("res").innerText = "";
+  document.getElementById("op").innerText = "None";
+}
+
+/* Enter key trigger (does last operation) */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    if (lastOp === "add") add();
+    else if (lastOp === "sub") sub();
+    else if (lastOp === "mul") mul();
+    else if (lastOp === "div") div();
+  }
+});
+</script>
+
+</body>
+</html>
